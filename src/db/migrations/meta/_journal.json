@@ -29,6 +29,20 @@
       "when": 1774215321089,
       "tag": "0003_equal_mentor",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1774373332591,
+      "tag": "0004_aberrant_wrecker",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1774438065595,
+      "tag": "0005_brave_pandemic",
+      "breakpoints": true
     }
   ]
 }

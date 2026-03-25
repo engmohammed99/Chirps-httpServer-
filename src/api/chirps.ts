@@ -16,9 +16,7 @@ import { getBearerToken, validateJWT } from "../auth.js";
 import { config } from "../config.js";
 
 export async function handlerChirpsCreate(req: Request, res: Response) {
-  type parameters = {
-    body: string;
-  };
+  type parameters = { body: string };
 
   const params: parameters = req.body;
 
@@ -58,8 +56,27 @@ function getCleanedBody(body: string, badWords: string[]) {
   return cleaned;
 }
 
-export async function handlerChirpsRetrieve(_: Request, res: Response) {
-  const chirps = await getChirps();
+export async function handlerChirpsRetrieve(req: Request, res: Response) {
+  let authorId = "";
+  let authorIdQuery = req.query.authorId;
+  if (typeof authorIdQuery === "string") {
+    authorId = authorIdQuery;
+  }
+
+  const chirps = await getChirps(authorId);
+
+  let sortDirection = "asc";
+  let sortDirectionParam = req.query.sort;
+  if (sortDirectionParam === "desc") {
+    sortDirection = "desc";
+  }
+
+  chirps.sort((a, b) =>
+    sortDirection === "asc"
+      ? a.createdAt.getTime() - b.createdAt.getTime()
+      : b.createdAt.getTime() - a.createdAt.getTime(),
+  );
+
   respondWithJSON(res, 200, chirps);
 }
 
